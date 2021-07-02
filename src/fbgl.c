@@ -177,11 +177,13 @@ int saveFrame(Framebuffer fb, char *path) {
 	              "%d %d\n"
 	              "255\n", fb.width, fb.height);
 	for (int i = 0; i < fb.width * fb.height; i++) {
-		fprintf(file, "%c%c%c",
-				fb.fb[i] & 0xff,
-				(fb.fb[i] & 0xff00) >> 8,
-				(fb.fb[i] & 0xff0000) >> 16);
-		//I could use getColor, but this is much faster.
+		if (fprintf(file, "%c%c%c",
+		            fb.fb[i] & 0xff,
+		            (fb.fb[i] & 0xff00) >> 8,
+		            (fb.fb[i] & 0xff0000) >> 16) < 0) {
+		//I could use getColor, but this is much faster. Also haha lisp go brrr.
+			return 1;
+		}
 	}
 
 	fclose(file);

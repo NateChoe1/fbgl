@@ -33,18 +33,9 @@ int main() {
 		ySpeed += 1;
 
 		usleep(16666);
+		saveFrame(fb, "frame.ppm");
+		sleep(100);
 	}
-
-	/*
-	int i = 0;
-	for (;;) {
-		int color = rgb(rand() % 2 * 255, rand() % 2 * 255, rand() % 2 * 255);
-		drawFilledCircle(fb, rand() % fb.width, rand() % fb.height, 5, 0, color);
-		if (i == 65535)
-			saveFrame(fb, "image.ppm");
-		i++;
-	}
-	*/
 
 	yesecho();
 }

@@ -12,5 +12,12 @@ link: $(OBJECTS)
 	$(AR) rcs build/libfbgl.a $(OBJECTS)
 
 install: build/libfbgl.a src/fbgl.h
-	@cp build/libfbgl.a $(LIBDIR)
-	@cp src/fbgl.h $(HEADERDIR)
+	@cp build/libfbgl.a $(LIBDIR)/libfbgl.a
+	@cp src/fbgl.h $(HEADERDIR)/fbgl.h
+
+uninstall: $(LIBDIR)/libfbgl.a $(HEADERDIR)/fbgl.h
+	@rm $(LIBDIR)/libfbgl.a
+	@rm $(HEADERDIR)/fbgl.h
+
+clean: build/libfbgl.a
+	@rm build/libfbgl.a
