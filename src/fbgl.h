@@ -19,6 +19,7 @@ void drawCircle(Framebuffer fb, int xc, int yc, int r, int color);
 void drawFilledCircle(Framebuffer fb,
 		int xc, int yc, int r, int border, int fill);
 //x center, y center, radius, border color, fill color
+void drawPolygon(Framebuffer fb, int pointCount, int *points, int color);
 
 void noecho();
 void yesecho();

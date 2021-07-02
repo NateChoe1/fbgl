@@ -33,8 +33,6 @@ int main() {
 		ySpeed += 1;
 
 		usleep(16666);
-		saveFrame(fb, "frame.ppm");
-		sleep(100);
 	}
 
 	yesecho();

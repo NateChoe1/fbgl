@@ -146,6 +146,23 @@ void drawFilledCircle(Framebuffer fb,
 	}
 }
 
+void drawPolygon(Framebuffer fb, int pointCount, int *points, int color) {
+	if (pointCount == 0)
+		return;
+	int x1 = points[0];
+	int y1 = points[1];
+	for (int i = 1; i < pointCount; i++) {
+		int x2 = points[i * 2];
+		int y2 = points[i * 2 + 1];
+
+		drawLine(fb, x1, y1, x2, y2, color);
+		x1 = x2;
+		y1 = y2;
+	}
+
+	drawLine(fb, points[0], points[1], x1, y1, color);
+}
+
 void noecho() {
 	struct termios info;
 	tcgetattr(fileno(stdin), &info);
