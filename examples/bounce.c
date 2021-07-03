@@ -29,7 +29,7 @@
 int main() {
 	noecho();
 
-	Framebuffer fb = createFramebuffer(NULL);
+	Framebuffer fb = createFramebuffer(getenv("FRAMEBUFFER"));
 
 	clearFramebuffer(fb, rgb(0, 0, 0));
 
