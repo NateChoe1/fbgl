@@ -61,18 +61,18 @@ Framebuffer createFramebuffer(char *fbpath) {
 	return fb;
 }
 
-void setPoint(Framebuffer fb, int x, int y, int color) {
+void setPoint(Framebuffer fb, int x, int y, Color color) {
 	if (between(0, x, fb.width) && between(0, y, fb.height))
 		fb.fb[y * fb.width + x] = color;
 }
 
-void clearFramebuffer(Framebuffer fb, int color) {
+void clearFramebuffer(Framebuffer fb, Color color) {
 	for (int i = 0; i < fb.width * fb.height; i++)
 		fb.fb[i] = color;
 	//I could use setPoint, but this is much faster.
 }
 
-void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, int color) {
+void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, Color color) {
 	if (x2 < x1) {
 		int tmp;
 		tmp = x1;
@@ -117,7 +117,7 @@ void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, int color) {
 	//Sometimes the final column isn't done (think vertical lines)
 }
 
-void draw8Symmetry(Framebuffer fb, int xc, int yc, int x, int y, int color) {
+void draw8Symmetry(Framebuffer fb, int xc, int yc, int x, int y, Color color) {
 		setPoint(fb, xc + x, yc + y, color);
 		setPoint(fb, xc - x, yc + y, color);
 		setPoint(fb, xc + x, yc - y, color);
@@ -128,7 +128,7 @@ void draw8Symmetry(Framebuffer fb, int xc, int yc, int x, int y, int color) {
 		setPoint(fb, xc - y, yc - x, color);
 }
 
-void drawCircle(Framebuffer fb, int xc, int yc, int r, int color) {
+void drawCircle(Framebuffer fb, int xc, int yc, int r, Color color) {
 	//beresenham's algorithm. I have no idea how this works, but it seems fast
 	//so who cares.
 	int d = 3 - (2 * r);
@@ -147,7 +147,7 @@ void drawCircle(Framebuffer fb, int xc, int yc, int r, int color) {
 }
 
 void drawFilledCircle(Framebuffer fb,
-		int xc, int yc, int r, int border, int fill) {
+		int xc, int yc, int r, Color border, Color fill) {
 	//Modified bresenham algorithm
 	int d = 3 - (2 * r);
 	int x = 0;
@@ -166,7 +166,7 @@ void drawFilledCircle(Framebuffer fb,
 	}
 }
 
-void drawPolygon(Framebuffer fb, int pointCount, int *points, int color) {
+void drawPolygon(Framebuffer fb, int pointCount, int *points, Color color) {
 	if (pointCount == 0)
 		return;
 	int x1 = points[0];
@@ -197,7 +197,7 @@ void yesecho() {
 	tcsetattr(fileno(stdin), 0, &info);
 }
 
-int getColor(Framebuffer fb, int x, int y) {
+Color getColor(Framebuffer fb, int x, int y) {
 	if (!(between(0, x, fb.width) && between(0, y, fb.height)))
 		return -1;
 	return fb.fb[y * fb.width + x];

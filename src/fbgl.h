@@ -18,8 +18,12 @@
  * Email me: natechoe9@gmail.com
  * */
 
+#include <stdint.h>
+
+typedef int32_t Color;
+
 typedef struct {
-	int *fb;
+	Color *fb;
 	//mmaped to /dev/fbX. Each value is of the form 0x00rrggbb with the
 	//endianness of the system. The point at (x, y) is at index (y * width + x)
 	int width;
@@ -31,21 +35,21 @@ Framebuffer createFramebuffer(char *fbpath);
 //NULL)
 
 #define rgb(r, g, b) ((r << 16) | (g << 8) | b)
-void setPoint(Framebuffer fb, int x, int y, int color);
-void clearFramebuffer(Framebuffer fb, int color);
-void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, int color);
-void drawCircle(Framebuffer fb, int xc, int yc, int r, int color);
+void setPoint(Framebuffer fb, int x, int y, Color color);
+void clearFramebuffer(Framebuffer fb, Color color);
+void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, Color color);
+void drawCircle(Framebuffer fb, int xc, int yc, int r, Color color);
 //x center, y center, radius, color
 void drawFilledCircle(Framebuffer fb,
-		int xc, int yc, int r, int border, int fill);
+		int xc, int yc, int r, Color border, Color fill);
 //x center, y center, radius, border color, fill color
-void drawPolygon(Framebuffer fb, int pointCount, int *points, int color);
+void drawPolygon(Framebuffer fb, int pointCount, int *points, Color color);
 
 void noecho();
 void yesecho();
 //Just so that the console doesn't try to draw over your stuff.
 
-int getColor(Framebuffer fb, int x, int y);
+Color getColor(Framebuffer fb, int x, int y);
 //Gets color at coordinate, if the coordinate is invalid -1 is returned.
 int saveFrame(Framebuffer fb, char *path);
 //If this messes up, it'll return 1.
