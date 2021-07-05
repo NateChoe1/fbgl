@@ -62,13 +62,15 @@ Framebuffer createFramebuffer(char *fbpath) {
 }
 
 void setPoint(Framebuffer fb, int x, int y, Color color) {
-	if (between(0, x, fb.width) && between(0, y, fb.height))
-		fb.fb[y * fb.width + x] = color;
+	if (color != TRANSPARENT)
+		if (between(0, x, fb.width) && between(0, y, fb.height))
+			fb.fb[y * fb.width + x] = color;
 }
 
 void clearFramebuffer(Framebuffer fb, Color color) {
-	for (int i = 0; i < fb.width * fb.height; i++)
-		fb.fb[i] = color;
+	if (color != TRANSPARENT)
+		for (int i = 0; i < fb.width * fb.height; i++)
+			fb.fb[i] = color;
 	//I could use setPoint, but this is much faster.
 }
 
@@ -181,6 +183,41 @@ void drawPolygon(Framebuffer fb, int pointCount, int *points, Color color) {
 	}
 
 	drawLine(fb, points[0], points[1], x1, y1, color);
+}
+
+void drawRect(Framebuffer fb, int x1, int y1, int x2, int y2,
+		int borderWidth, Color border) {
+	for (int i = x1 - borderWidth; i <= x2 + borderWidth; i++) {
+		for (int j = y1 - borderWidth; j <= y1; j++)
+			setPoint(fb, i, j, border);
+		for (int j = y2; j <= y2 + borderWidth; j++)
+			setPoint(fb, i, j, border);
+	}
+	for (int i = y1; i <= y2; i++) {
+		for (int j = x1 - borderWidth; j <= x1; j++)
+			setPoint(fb, j, i, border);
+		for (int j = x2; j <= x2 + borderWidth; j++)
+			setPoint(fb, j, i, border);
+	}
+}
+
+void drawFilledRect(Framebuffer fb, int x1, int y1, int x2, int y2, int borderWidth,
+              Color fill, Color border) {
+	if (x1 > x2) {
+		int tmp = x1;
+		x1 = x2;
+		x2 = tmp;
+	}
+	if (y1 > y2) {
+		int tmp = y1;
+		y1 = y2;
+		y2 = tmp;
+	}
+	for (int i = x1; i <= x2; i++)
+		for (int j = y1; j <= y2; j++)
+			setPoint(fb, i, j, fill);
+
+	drawRect(fb, x1, y1, x2, y2, borderWidth, border);
 }
 
 void noecho() {

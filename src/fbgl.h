@@ -21,6 +21,7 @@
 #include <stdint.h>
 
 typedef int32_t Color;
+#define TRANSPARENT -1
 
 typedef struct {
 	Color *fb;
@@ -44,6 +45,11 @@ void drawFilledCircle(Framebuffer fb,
 		int xc, int yc, int r, Color border, Color fill);
 //x center, y center, radius, border color, fill color
 void drawPolygon(Framebuffer fb, int pointCount, int *points, Color color);
+
+void drawRect(Framebuffer fb, int x1, int y1, int x2, int y2,
+		int borderWidth, Color border);
+void drawFilledRect(Framebuffer fb, int x1, int y1, int x2, int y2,
+		int borderWidth, Color fill, Color border);
 
 void noecho();
 void yesecho();
