@@ -91,6 +91,8 @@ void drawLine(Framebuffer fb, int x1, int y1, int x2, int y2, Color color) {
 	int dy = y2 - y1;
 
 	char direction = (dy < 0) ? -1:1;
+	if (dy < 0)
+		dy *= -1;
 
 	int y = y1;
 	int distance = 0;

@@ -37,10 +37,10 @@ int main() {
 	int y = rand() % fb.height;
 	int xSpeed = rand() % 10;
 	int ySpeed = 0;
-	for (;;) {
+	for (unsigned char i = 0;; i++) {
 		clearFramebuffer(fb, rgb(0, 0, 0));
 
-		drawFilledCircle(fb, x, y, 5, rgb(0, 0, 0), rgb(255, 255, 255));
+		drawFilledCircle(fb, x, y, 5, rgb(0, 0, 0), rgb(i, 255 - i, i + 128));
 
 		x += xSpeed;
 		y += ySpeed;
